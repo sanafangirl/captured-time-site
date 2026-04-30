@@ -120,3 +120,32 @@ nav {
   background: #7e9bab;
   color: black;
 }
+
+.contact {
+  padding: 100px 20px;
+  text-align: center;
+  border-top: 1px solid #7e9bab;
+}
+
+.contact h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.contact p {
+  opacity: 0.7;
+  margin-bottom: 30px;
+}
+
+.contact-links a {
+  margin: 0 15px;
+  text-decoration: none;
+  color: white;
+  border-bottom: 1px solid transparent;
+  transition: 0.3s;
+}
+
+.contact-links a:hover {
+  color: #7e9bab;
+  border-bottom: 1px solid #7e9bab;
+}
