@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio — Emily's Captured Time</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #080808;
+      --white: #f0ede8;
+      --accent: #c8b89a;
+      --grey: #6b6b6b;
+      --light-grey: #2a2a2a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.4rem 2.5rem;
+      background: linear-gradient(to bottom, rgba(8,8,8,0.95), transparent);
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { opacity: 1; }
+
+    .nav-instagram {
+      display: flex;
+      align-items: center;
+      color: var(--white);
+      text-decoration: none;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+    .nav-instagram:hover { opacity: 1; }
+    .nav-instagram svg { width: 18px; height: 18px; fill: var(--white); }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .hamburger span { display: block; width: 22px; height: 1px; background: var(--white); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(8,8,8,0.97);
+      z-index: 99;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      color: var(--white);
+      text-decoration: none;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem;
+      font-weight: 300;
+    }
+    .mobile-menu-close {
+      position: absolute;
+      top: 1.5rem; right: 2rem;
+      background: none; border: none;
+      color: var(--white);
+      font-size: 1.8rem;
+      cursor: pointer;
+    }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      padding: 9rem 4rem 3rem;
+      text-align: center;
+    }
+
+    .page-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 300;
+      letter-spacing: -0.01em;
+    }
+
+    .page-subtitle {
+      margin-top: 1rem;
+      font-size: 0.82rem;
+      letter-spacing: 0.12em;
+      color: rgba(240,237,232,0.5);
+    }
+
+    /* ── STRIP GALLERY ── */
+    .strip-gallery {
+      display: flex;
+      height: 80vh;
+      min-height: 500px;
+      margin: 3rem 0;
+      overflow: hidden;
+    }
+
+    .strip-item {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: flex 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      border-right: 1px solid rgba(240,237,232,0.06);
+    }
+    .strip-item:last-child { border-right: none; }
+
+    .strip-item:hover { flex: 2.5; }
+
+    .strip-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: transform 0.6s ease;
+      display: block;
+    }
+    .strip-item:hover img { transform: scale(1.03); }
+
+    .strip-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(8,8,8,0.85) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 2rem 1.5rem;
+    }
+    .strip-item:hover .strip-overlay { opacity: 1; }
+
+    .strip-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: 0.4rem;
+    }
+
+    .strip-desc {
+      font-size: 0.75rem;
+      line-height: 1.6;
+      color: rgba(240,237,232,0.7);
+    }
+
+    /* ── COLLECTIONS GRID ── */
+    .collections-section {
+      padding: 5rem 4rem;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    .collections-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .collection-card {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+    }
+
+    .collection-card-img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    .collection-card:hover .collection-card-img { transform: scale(1.04); }
+
+    .collection-card-info {
+      padding: 1rem 0 0.5rem;
+    }
+
+    .collection-card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: 0.3rem;
+    }
+
+    .collection-card-desc {
+      font-size: 0.75rem;
+      color: rgba(240,237,232,0.5);
+      line-height: 1.5;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 3rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      border-top: 1px solid var(--light-grey);
+      margin-top: 2rem;
+    }
+
+    .footer-left {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 300;
+    }
+    .footer-email {
+      color: rgba(240,237,232,0.5);
+      font-size: 0.78rem;
+      letter-spacing: 0.05em;
+      margin-top: 0.4rem;
+    }
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.8rem;
+    }
+    .footer-links a {
+      color: rgba(240,237,232,0.5);
+      text-decoration: none;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--white); }
+    .footer-instagram {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .footer-instagram svg { width: 16px; height: 16px; fill: rgba(240,237,232,0.5); transition: fill 0.2s; }
+    .footer-instagram:hover svg { fill: var(--white); }
+
+    /* ── FADE IN ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.8s ease forwards;
+    }
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .collections-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links, .nav-instagram { display: none; }
+      .hamburger { display: flex; }
+
+      .page-header { padding: 7rem 1.5rem 2rem; }
+
+      .strip-gallery {
+        flex-direction: column;
+        height: auto;
+      }
+      .strip-item {
+        flex: none;
+        height: 220px;
+        border-right: none;
+        border-bottom: 1px solid rgba(240,237,232,0.06);
+      }
+      .strip-item:hover { flex: none; }
+      .strip-overlay { opacity: 1; }
+
+      .collections-section { padding: 3rem 1.5rem; }
+      .collections-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+      footer {
+        flex-direction: column;
+        gap: 1.5rem;
+        padding: 2rem 1.5rem;
+      }
+      .footer-links { align-items: flex-start; }
+    }
+
+    @media (max-width: 480px) {
+      .collections-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-logo">Emily's Captured Time</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="portfolio.html" class="active">Portfolio</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="https://www.instagram.com/" target="_blank" class="nav-instagram">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+      </svg>
+    </a>
+    <button class="hamburger" onclick="document.querySelector('.mobile-menu').classList.add('open')" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu">
+    <button class="mobile-menu-close" onclick="document.querySelector('.mobile-menu').classList.remove('open')">&times;</button>
+    <a href="index.html" onclick="document.querySelector('.mobile-menu').classList.remove('open')">Home</a>
+    <a href="about.html" onclick="document.querySelector('.mobile-menu').classList.remove('open')">About</a>
+    <a href="portfolio.html" onclick="document.querySelector('.mobile-menu').classList.remove('open')">Portfolio</a>
+    <a href="contact.html" onclick="document.querySelector('.mobile-menu').classList.remove('open')">Contact</a>
+  </div>
+
+  <!-- PAGE HEADER -->
+  <header class="page-header">
+    <h1 class="page-title fade-in">My Portfolio</h1>
+    <p class="page-subtitle">Welcome to my portfolio. Here you'll find a selection of my work.</p>
+  </header>
+
+  <!-- STRIP GALLERY -->
+  <div class="strip-gallery">
+    <div class="strip-item">
+      <img
+        src="https://static.wixstatic.com/media/6b1ee7_d3f8dfafa27c4f74a7deadfae0a076ad~mv2.jpg/v1/fill/w_600,h_900,al_c,fp_0.47_0.52/6b1ee7_d3f8dfafa27c4f74a7deadfae0a076ad~mv2.jpg"
+        alt="No One Noticed"
+        loading="lazy"
+      >
+      <div class="strip-overlay">
+        <div class="strip-title">No One Noticed</div>
+        <div class="strip-desc">they didn't have to look back; sometimes the purest moments happen when no one's looking</div>
+      </div>
+    </div>
+    <div class="strip-item">
+      <img
+        src="https://static.wixstatic.com/media/6b1ee7_41789f6ca91b4242ad32c98ff02aba30~mv2.jpg/v1/fill/w_600,h_900,al_c,fp_0.48_0.29/6b1ee7_41789f6ca91b4242ad32c98ff02aba30~mv2.jpg"
+        alt="Tribute to my sister"
+        loading="lazy"
+      >
+      <div class="strip-overlay">
+        <div class="strip-title">tribute to my sister</div>
+        <div class="strip-desc">capturing once in a lifetime moments of my sister</div>
+      </div>
+    </div>
+    <div class="strip-item">
+      <img
+        src="https://static.wixstatic.com/media/6b1ee7_e3cd80cd0fa445f4a7b0e3e79953c89d~mv2.jpg/v1/fill/w_600,h_900,al_c,fp_0.51_0.48/6b1ee7_e3cd80cd0fa445f4a7b0e3e79953c89d~mv2.jpg"
+        alt="Pulse of the streets"
+        loading="lazy"
+      >
+      <div class="strip-overlay">
+        <div class="strip-title">pulse of the streets</div>
+        <div class="strip-desc">life moves fast; these images pause the fleeting beat of the streets and environment</div>
+      </div>
+    </div>
+    <div class="strip-item">
+      <img
+        src="https://static.wixstatic.com/media/6b1ee7_df76e0bdac59457e82a21ba1afba45d2~mv2.jpg/v1/fill/w_600,h_900,al_c,fp_0.33_0.29/6b1ee7_df76e0bdac59457e82a21ba1afba45d2~mv2.jpg"
+        alt="The people I've passed"
+        loading="lazy"
+      >
+      <div class="strip-overlay">
+        <div class="strip-title">the people i've passed</div>
+        <div class="strip-desc">from strangers I meet to fleeting moments on the street, each photograph holds a story</div>
+      </div>
+    </div>
+    <div class="strip-item">
+      <img
+        src="https://static.wixstatic.com/media/6b1ee7_6b4382c9fec540d6a1619e549bd988de~mv2.jpg/v1/fill/w_600,h_900,al_c,fp_0.45_0.31/6b1ee7_6b4382c9fec540d6a1619e549bd988de~mv2.jpg"
+        alt="World of my friends"
+        loading="lazy"
+      >
+      <div class="strip-overlay">
+        <div class="strip-title">world of my friends</div>
+        <div class="strip-desc">the world is your studio, i'm just here to capture it</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COLLECTIONS DETAIL -->
+  <section class="collections-section">
+    <p class="section-label">Collections</p>
+    <div class="collections-grid">
+      <a class="collection-card" href="#">
+        <img class="collection-card-img"
+          src="https://static.wixstatic.com/media/6b1ee7_d3f8dfafa27c4f74a7deadfae0a076ad~mv2.jpg/v1/fill/w_500,h_700,al_c/6b1ee7_d3f8dfafa27c4f74a7deadfae0a076ad~mv2.jpg"
+          alt="No One Noticed" loading="lazy">
+        <div class="collection-card-info">
+          <div class="collection-card-title">No One Noticed</div>
+          <div class="collection-card-desc">the purest moments happen when no one's looking</div>
+        </div>
+      </a>
+      <a class="collection-card" href="#">
+        <img class="collection-card-img"
+          src="https://static.wixstatic.com/media/6b1ee7_41789f6ca91b4242ad32c98ff02aba30~mv2.jpg/v1/fill/w_500,h_700,al_c/6b1ee7_41789f6ca91b4242ad32c98ff02aba30~mv2.jpg"
+          alt="Tribute to my sister" loading="lazy">
+        <div class="collection-card-info">
+          <div class="collection-card-title">tribute to my sister</div>
+          <div class="collection-card-desc">capturing once in a lifetime moments</div>
+        </div>
+      </a>
+      <a class="collection-card" href="#">
+        <img class="collection-card-img"
+          src="https://static.wixstatic.com/media/6b1ee7_e3cd80cd0fa445f4a7b0e3e79953c89d~mv2.jpg/v1/fill/w_500,h_700,al_c/6b1ee7_e3cd80cd0fa445f4a7b0e3e79953c89d~mv2.jpg"
+          alt="Pulse of the streets" loading="lazy">
+        <div class="collection-card-info">
+          <div class="collection-card-title">pulse of the streets</div>
+          <div class="collection-card-desc">life moves fast; pausing the fleeting beat</div>
+        </div>
+      </a>
+      <a class="collection-card" href="#">
+        <img class="collection-card-img"
+          src="https://static.wixstatic.com/media/6b1ee7_df76e0bdac59457e82a21ba1afba45d2~mv2.jpg/v1/fill/w_500,h_700,al_c/6b1ee7_df76e0bdac59457e82a21ba1afba45d2~mv2.jpg"
+          alt="The people I've passed" loading="lazy">
+        <div class="collection-card-info">
+          <div class="collection-card-title">the people i've passed</div>
+          <div class="collection-card-desc">each photograph holds a story, a connection</div>
+        </div>
+      </a>
+      <a class="collection-card" href="#">
+        <img class="collection-card-img"
+          src="https://static.wixstatic.com/media/6b1ee7_6b4382c9fec540d6a1619e549bd988de~mv2.jpg/v1/fill/w_500,h_700,al_c/6b1ee7_6b4382c9fec540d6a1619e549bd988de~mv2.jpg"
+          alt="World of my friends" loading="lazy">
+        <div class="collection-card-info">
+          <div class="collection-card-title">world of my friends</div>
+          <div class="collection-card-desc">the world is your studio</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-left">
+      Emily Z
+      <div class="footer-email">byem.png@gmail.com</div>
+    </div>
+    <div class="footer-links">
+      <a href="about.html">About</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="contact.html">Contact</a>
+      <a href="https://www.instagram.com/" target="_blank" class="footer-instagram">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+        </svg>
+        Instagram
+      </a>
+    </div>
+  </footer>
+
+</body>
+</html>
