@@ -215,7 +215,7 @@
       margin-left: 150px;
       transform: translateX(5px);
 
-      box-shadow: 0 20px 60px rgba(165, 128, 154, 0.6);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.4);
     }
 
     .hero-image-large {
@@ -224,7 +224,7 @@
       object-fit: cover;
       margin-top: 4rem;
       margin-left: 400px;
-      box-shadow: 0 20px 60px rgba(165, 128, 154, 0.6);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.4);
     }
 
     .hero-right {
@@ -249,7 +249,7 @@
       aspect-ratio: 3/4;
       object-fit: cover;
       align-self: flex-end;
-      box-shadow: 0 20px 60px rgba(165, 128, 154, 0.6);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.4);
     }
 
     /* ── TAGLINE SECTION ── */
@@ -369,6 +369,54 @@
       transform: translateY(24px);
       animation: fadeUp 0.9s ease forwards;
     }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0;
+    transform: translateY(40px) scale(0.98);
+    transition: all 0.8s ease;
+    }
+    /* ── CAMERA SWEEP ── */
+.reveal {
+  position: relative;
+  overflow: hidden;
+}
+
+.reveal::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 60%;
+  height: 100%;
+
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.12),
+    transparent
+  );
+
+  transform: skewX(-20deg);
+}
+
+.reveal.in-view::after {
+  animation: sweep 1.2s ease forwards;
+}
+
+@keyframes sweep {
+  0% {
+    left: -120%;
+  }
+  100% {
+    left: 140%;
+  }
+}
+
+    .reveal.in-view {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
     .fade-in:nth-child(1) { animation-delay: 0.1s; }
     .fade-in:nth-child(2) { animation-delay: 0.25s; }
     .fade-in:nth-child(3) { animation-delay: 0.4s; }
@@ -458,25 +506,20 @@
   <!-- HERO -->
   <section class="hero">
     <div class="hero-left">
-      <img
-        class="hero-image-train fade-in"
+      <img class="hero-image-train"
         src="https://static.wixstatic.com/media/6b1ee7_e3cd80cd0fa445f4a7b0e3e79953c89d~mv2.jpg/v1/fill/w_800,h_600,al_c/6b1ee7_e3cd80cd0fa445f4a7b0e3e79953c89d~mv2.jpg"
-        alt="Motion blur of a train at night"
-      >
+        alt="Motion blur of a train at night">
       <img
-        class="hero-image-large fade-in"
+        class="hero-image-large"
         src="https://static.wixstatic.com/media/6b1ee7_df76e0bdac59457e82a21ba1afba45d2~mv2.jpg/v1/fill/w_1200,h_800,al_c/6b1ee7_df76e0bdac59457e82a21ba1afba45d2~mv2.jpg"
-        alt="People looking at the Seattle waterfront and ferris wheel"
-      >
+        alt="People looking at the Seattle waterfront and ferris wheel">
     </div>
 
     <div class="hero-right">
-      <h1 class="hero-title fade-in">Emily's<br>Captured<br>Time</h1>
-      <img
-        class="hero-image-duo fade-in"
+      <h1 class="hero-title">Emily's<br>Captured<br>Time</h1>
+      <img class="hero-image-duo"
         src="https://static.wixstatic.com/media/6b1ee7_d3f8dfafa27c4f74a7deadfae0a076ad~mv2.jpg/v1/fill/w_600,h_900,al_c/6b1ee7_d3f8dfafa27c4f74a7deadfae0a076ad~mv2.jpg"
-        alt="Two people in quiet conversation"
-      >
+        alt="Two people in quiet conversation">
     </div>
   </section>
 
@@ -491,7 +534,7 @@
         <p>I am a Seattle, WA based photographer who likes capturing time through photos. I want to freeze a fleeting moment as it's a particular configuration of light, emotion, and place that will never exist in exactly the same way again.</p>
         <p>This is a collection of some of my favorite pieces and my personal thoughts about them.</p>
       </div>
-      <a href="portfolio.html" class="btn">View Portfolio</a>
+      <a href="portfolio.html" class="btn reveal">View Portfolio</a>
     </div>
   </section>
 
@@ -580,6 +623,21 @@
   document.querySelectorAll('.nav-links a').forEach(link => {
     link.addEventListener('mouseenter', () => flashRays(link));
   });
+  const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in-view');
+    } else {
+      entry.target.classList.remove('in-view');
+    }
+  });
+}, {
+  threshold: 0.2
+});
+
+// target elements
+document.querySelectorAll('.hero-image-train, .hero-image-large, .hero-image-duo, .btn')
+  .forEach(el => observer.observe(el));
 </script>
 </body>
 </html>
