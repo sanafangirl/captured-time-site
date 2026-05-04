@@ -211,7 +211,11 @@
       position: relative;
       z-index: 2;
       margin-top: 3rem;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+
+      margin-left: 150px;
+      transform: translateX(5px);
+
+      box-shadow: 0 20px 60px rgba(165, 128, 154, 0.6);
     }
 
     .hero-image-large {
@@ -219,7 +223,8 @@
       aspect-ratio: 16/10;
       object-fit: cover;
       margin-top: 4rem;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      margin-left: 400px;
+      box-shadow: 0 20px 60px rgba(165, 128, 154, 0.6);
     }
 
     .hero-right {
@@ -244,7 +249,7 @@
       aspect-ratio: 3/4;
       object-fit: cover;
       align-self: flex-end;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      box-shadow: 0 20px 60px rgba(165, 128, 154, 0.6);
     }
 
     /* ── TAGLINE SECTION ── */
@@ -274,10 +279,10 @@
     }
 
     .tagline-body {
-      font-size: 0.88rem;
+      font-size: 1.5rem;
       line-height: 1.85;
       color: rgba(240,237,232,0.7);
-      max-width: 420px;
+      max-width: 600px;
     }
 
     .tagline-body p { margin-bottom: 1.2rem; }
@@ -385,9 +390,21 @@
         min-height: auto;
         padding-top: 4rem;
       }
+
       .hero-left { padding: 2rem 1.5rem; }
-      .hero-image-train { width: 75%; }
-      .hero-image-large { width: 100%; }
+
+      .hero-image-train {
+        width: 75%;
+        margin-left: 0;
+        transform: none;
+      }
+
+      .hero-image-large {
+        width: 100%;
+        margin-left: 0;
+        transform: none;
+      }
+
       .hero-right { padding: 2rem 1.5rem; }
       .hero-image-duo { width: 80%; align-self: flex-start; }
 
@@ -397,14 +414,15 @@
         gap: 2rem;
       }
 
-      footer {
-        flex-direction: column;
-        gap: 1.5rem;
-        padding: 2rem 1.5rem;
-      }
-      .footer-links { align-items: flex-start; }
-      .divider { margin: 0 1.5rem; width: calc(100% - 3rem); }
-    }
+  footer {
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 2rem 1.5rem;
+  }
+
+  .footer-links { align-items: flex-start; }
+  .divider { margin: 0 1.5rem; width: calc(100% - 3rem); }
+}
   </style>
 </head>
 <body>
