@@ -306,6 +306,20 @@
     }
 
     @media (max-width: 768px) {
+      .strip-gallery {
+      flex-direction: row;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      height: 70vh;
+     }
+
+    .strip-item {
+      min-width: 80vw;
+      scroll-snap-align: center;
+     }
+    }
+
+    @media (max-width: 768px) {
       nav { padding: 1.2rem 1.5rem; }
       .nav-links, .nav-instagram { display: none; }
       .hamburger { display: flex; }
@@ -374,14 +388,14 @@
   <!-- PAGE HEADER -->
   <header class="page-header">
     <h1 class="page-title fade-in">My Portfolio</h1>
-    <p class="page-subtitle">Welcome to my portfolio. Here you'll find a selection of my work.</p>
+    <p class="page-subtitle">Welcome to my portfolio. Here you'll find a collection of my work. Thank you for cherishing these moments with me.</p>
   </header>
 
   <!-- STRIP GALLERY -->
   <div class="strip-gallery">
     <div class="strip-item">
       <img
-        src="https://static.wixstatic.com/media/6b1ee7_d3f8dfafa27c4f74a7deadfae0a076ad~mv2.jpg/v1/fill/w_600,h_900,al_c,fp_0.47_0.52/6b1ee7_d3f8dfafa27c4f74a7deadfae0a076ad~mv2.jpg"
+        src="images/noone-strip1.png"
         alt="No One Noticed"
         loading="lazy"
       >
@@ -392,7 +406,7 @@
     </div>
     <div class="strip-item">
       <img
-        src="https://static.wixstatic.com/media/6b1ee7_41789f6ca91b4242ad32c98ff02aba30~mv2.jpg/v1/fill/w_600,h_900,al_c,fp_0.48_0.29/6b1ee7_41789f6ca91b4242ad32c98ff02aba30~mv2.jpg"
+        src="images/tribute-strip1.JPG"
         alt="Tribute to my sister"
         loading="lazy"
       >
@@ -440,16 +454,16 @@
   <section class="collections-section">
     <p class="section-label">Collections</p>
     <div class="collections-grid">
-      <a class="collection-card" href="#">
+      <a class="collection-card" href="no-one-noticed.html">
         <img class="collection-card-img"
           src="https://static.wixstatic.com/media/6b1ee7_d3f8dfafa27c4f74a7deadfae0a076ad~mv2.jpg/v1/fill/w_500,h_700,al_c/6b1ee7_d3f8dfafa27c4f74a7deadfae0a076ad~mv2.jpg"
-          alt="No One Noticed" loading="lazy">
+          alt="No One Noticed" loading="lazy"> 
         <div class="collection-card-info">
           <div class="collection-card-title">No One Noticed</div>
           <div class="collection-card-desc">the purest moments happen when no one's looking</div>
         </div>
       </a>
-      <a class="collection-card" href="#">
+      <a class="collection-card" href="tribute-to-my-sister.html">
         <img class="collection-card-img"
           src="https://static.wixstatic.com/media/6b1ee7_41789f6ca91b4242ad32c98ff02aba30~mv2.jpg/v1/fill/w_500,h_700,al_c/6b1ee7_41789f6ca91b4242ad32c98ff02aba30~mv2.jpg"
           alt="Tribute to my sister" loading="lazy">
@@ -458,7 +472,7 @@
           <div class="collection-card-desc">capturing once in a lifetime moments</div>
         </div>
       </a>
-      <a class="collection-card" href="#">
+      <a class="collection-card" href="pulse-of-the-streets.html">
         <img class="collection-card-img"
           src="https://static.wixstatic.com/media/6b1ee7_e3cd80cd0fa445f4a7b0e3e79953c89d~mv2.jpg/v1/fill/w_500,h_700,al_c/6b1ee7_e3cd80cd0fa445f4a7b0e3e79953c89d~mv2.jpg"
           alt="Pulse of the streets" loading="lazy">
@@ -467,7 +481,7 @@
           <div class="collection-card-desc">life moves fast; pausing the fleeting beat</div>
         </div>
       </a>
-      <a class="collection-card" href="#">
+      <a class="collection-card" href="the-people-i've-passed.html">
         <img class="collection-card-img"
           src="https://static.wixstatic.com/media/6b1ee7_df76e0bdac59457e82a21ba1afba45d2~mv2.jpg/v1/fill/w_500,h_700,al_c/6b1ee7_df76e0bdac59457e82a21ba1afba45d2~mv2.jpg"
           alt="The people I've passed" loading="lazy">
@@ -476,7 +490,7 @@
           <div class="collection-card-desc">each photograph holds a story, a connection</div>
         </div>
       </a>
-      <a class="collection-card" href="#">
+      <a class="collection-card" href="world-of-my-friends.html">
         <img class="collection-card-img"
           src="https://static.wixstatic.com/media/6b1ee7_6b4382c9fec540d6a1619e549bd988de~mv2.jpg/v1/fill/w_500,h_700,al_c/6b1ee7_6b4382c9fec540d6a1619e549bd988de~mv2.jpg"
           alt="World of my friends" loading="lazy">
