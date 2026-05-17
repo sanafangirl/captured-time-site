@@ -22,6 +22,12 @@
       padding: 3rem;
     }
 
+    /* image protection */
+    img {
+      -webkit-user-drag: none;
+     user-select: none;
+    }
+
     .back-link {
       color: rgba(240,237,232,0.6);
       text-decoration: none;
@@ -91,12 +97,17 @@
 
   <div class="gallery-grid">
 
-    <img src="YOURIMAGE1.jpg">
-    <img src="YOURIMAGE2.jpg">
-    <img src="YOURIMAGE3.jpg">
-    <img src="YOURIMAGE4.jpg">
+    <img src="images/friends1.JPG">
+    <img src="images/friends2.JPG">
+    <img src="images/friends3.JPG">
 
   </div>
+
+ <script>
+    document.querySelectorAll("img").forEach(img => {
+      img.addEventListener("contextmenu", e => e.preventDefault());
+    });
+  </script>
 
 </body>
 </html>
