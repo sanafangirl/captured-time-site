@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Tribute to My Sister</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #080808;
+      color: #f0ede8;
+      font-family: 'Jost', sans-serif;
+      padding: 3rem;
+    }
+
+    .back-link {
+      color: rgba(240,237,232,0.6);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-size: 0.7rem;
+    }
+
+    .gallery-header {
+      margin: 4rem 0;
+    }
+
+    .gallery-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 4rem;
+      font-weight: 300;
+      margin-bottom: 1rem;
+    }
+
+    .gallery-description {
+      max-width: 600px;
+      line-height: 1.8;
+      color: rgba(240,237,232,0.6);
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .gallery-grid img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 1.5rem;
+      }
+
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery-title {
+        font-size: 2.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <a href="portfolio.html" class="back-link">
+    ← Back to Portfolio
+  </a>
+
+  <div class="gallery-header">
+    <h1 class="gallery-title">tribute to my sister</h1>
+
+    <p class="gallery-description">
+      capturing once in a lifetime moments of my sister
+    </p>
+  </div>
+
+  <div class="gallery-grid">
+
+    <img src="images/tribute1.JPG">
+    <img src="images/tribute2.JPG">
+    <img src="images/tribute3.JPG">
+    <img src="images/tribute4.JPG">
+    <img src="images/tribute5.JPG">
+    <img src="images/tribute6.JPG">
+    <img src="images/tribute7.JPG">
+
+  </div>
+
+</body>
+</html>
