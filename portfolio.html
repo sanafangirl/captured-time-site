@@ -28,6 +28,12 @@
       overflow-x: hidden;
     }
 
+    /* image protection */
+    img {
+      -webkit-user-drag: none;
+      user-select: none;
+    }
+
     /* ── NAV ── */
     nav {
       position: fixed;
@@ -541,6 +547,12 @@
       </a>
     </div>
   </footer>
+
+  <script>
+    document.querySelectorAll("img").forEach(img => {
+      img.addEventListener("contextmenu", e => e.preventDefault());
+    });
+  </script>
 
 </body>
 </html>
