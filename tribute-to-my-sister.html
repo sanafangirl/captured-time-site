@@ -36,6 +36,10 @@
       font-size: 0.7rem;
     }
 
+     .back-link:hover {
+      opacity: 1;
+    }
+
     .gallery-header {
       margin: 4rem 0;
     }
@@ -47,6 +51,18 @@
       margin-bottom: 1rem;
     }
 
+     .gallery-title span {
+      display: inline-block;
+      transform: translateY(100%);
+      animation: titleReveal 1s forwards;
+    }
+
+    @keyframes titleReveal {
+      to {
+        transform: translateY(0);
+      }
+    }
+
     .gallery-description {
       max-width: 600px;
       line-height: 1.8;
@@ -54,15 +70,61 @@
     }
 
     .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1rem;
+      column-count: 2;
+      column-gap: 1rem;
+
+      max-width: 1500px;
+      margin: 0 auto;
+
+      animation: pageFade 1.4s ease;
     }
 
     .gallery-grid img {
       width: 100%;
       display: block;
-      object-fit: cover;
+       margin-bottom: 1rem;
+
+      break-inside: avoid;
+      border-radius: 2px;
+
+      transition:
+        transform 0.4s ease,
+        opacity 0.4s ease,
+        filter 0.4s ease;
+    }
+
+    .gallery-grid img:hover {
+      transform: scale(1.02) translateY(-4px);
+      filter: brightness(1.05);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition:
+        opacity 1.2s ease,
+        transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .gallery-header {
+      animation: pageFade 1.4s ease;
+    }
+
+    @keyframes pageFade {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     @media (max-width: 768px) {
@@ -88,7 +150,9 @@
   </a>
 
   <div class="gallery-header">
-    <h1 class="gallery-title">tribute to my sister</h1>
+    <h1 class="gallery-title">
+      <span>tribute to my sister</span>
+    </h1>
 
     <p class="gallery-description">
       capturing once in a lifetime moments of my sister
@@ -104,14 +168,38 @@
     <img src="images/tribute5.JPG">
     <img src="images/tribute6.JPG">
     <img src="images/tribute7.JPG">
+    <img src="images/tribute8.JPG">
+    <img src="images/tribute9.JPG">
 
   </div>
 
- <script>
+    <!-- right click protection -->
+  <script>
     window.addEventListener("DOMContentLoaded", () => {
       document.querySelectorAll("img").forEach(img => {
         img.addEventListener("contextmenu", e => e.preventDefault());
       });
+    });
+  </script>
+
+  <!-- reveal on scroll -->
+  <script>
+    const reveals = document.querySelectorAll(".reveal");
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+        } else {
+          entry.target.classList.remove("visible");
+        }
+      });
+    }, {
+      threshold: 0.15
+    });
+
+    reveals.forEach(reveal => {
+      observer.observe(reveal);
     });
   </script>
 
