@@ -175,6 +175,8 @@
         transform: scale(0.92);
         opacity: 0;
 
+        will-change: transform, opacity;
+
         transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
                     opacity 0.35s ease;
 
@@ -207,19 +209,19 @@
 
   <div class="gallery-grid">
 
-    <img src="images/pulse1.JPG">
-    <img src="images/pulse2.JPG">
-    <img src="images/pulse3.JPG">
-    <img src="images/pulse4.JPG">
-    <img src="images/pulse5.JPG">
-    <img src="images/pulse6.JPG">
-    <img src="images/pulse7.JPG">
-    <img src="images/pulse8.JPG">
-    <img src="images/pulse9.JPG">
-    <img src="images/pulse10.JPG">
-    <img src="images/pulse11.JPG">
-    <img src="images/pulse12.JPG">
-    <img src="images/pulse13.JPG">
+    <img class="reveal" src="images/pulse1.JPG">
+    <img class="reveal" src="images/pulse2.JPG">
+    <img class="reveal" src="images/pulse3.JPG">
+    <img class="reveal" src="images/pulse4.JPG">
+    <img class="reveal" src="images/pulse5.JPG">
+    <img class="reveal" src="images/pulse6.JPG">
+    <img class="reveal" src="images/pulse7.JPG">
+    <img class="reveal" src="images/pulse8.JPG">
+    <img class="reveal" src="images/pulse9.JPG">
+    <img class="reveal" src="images/pulse10.JPG">
+    <img class="reveal" src="images/pulse11.JPG">
+    <img class="reveal" src="images/pulse12.JPG">
+    <img class="reveal" src="images/pulse13.JPG">
 
   </div>
 
@@ -253,6 +255,10 @@
     });
   </script>
 
+  <script>
+  const images = Array.from(document.querySelectorAll(".gallery-grid img")).map(img => img.src);
+  </script>
+
   <!-- LIGHTBOX -->
   <div class="lightbox" id="lightbox">
     <img id="lightbox-img" src="">
@@ -262,23 +268,61 @@
   const lightbox = document.getElementById("lightbox");
   const lightboxImg = document.getElementById("lightbox-img");
 
-  document.querySelectorAll(".gallery-grid img").forEach(img => {
-    img.addEventListener("click", () => {
-      lightboxImg.style.opacity = 0; // hide first
+  const imgs = Array.from(document.querySelectorAll(".gallery-grid img"));
+  const imageList = imgs.map(img => img.src);
 
-      lightbox.classList.add("active");
-      lightboxImg.src = img.src;
+  let currentIndex = 0;
 
-      // wait a frame so transition actually triggers
-      requestAnimationFrame(() => {
-        lightboxImg.style.opacity = 1;
-      });
-    });
+  function openLightbox(index) {
+    currentIndex = index;
+    lightboxImg.src = imageList[currentIndex];
+    lightbox.classList.add("active");
+  }
+
+  function showNext() {
+    currentIndex = (currentIndex + 1) % imageList.length;
+    lightboxImg.src = imageList[currentIndex];
+  }
+
+  function showPrev() {
+    currentIndex = (currentIndex - 1 + imageList.length) % imageList.length;
+    lightboxImg.src = imageList[currentIndex];
+  }
+
+  // click to open
+  imgs.forEach((img, index) => {
+    img.addEventListener("click", () => openLightbox(index));
   });
 
+  // close lightbox
   lightbox.addEventListener("click", () => {
     lightbox.classList.remove("active");
   });
+
+  // -------- SWIPE CONTROLS --------
+  let startX = 0;
+  let endX = 0;
+
+  lightbox.addEventListener("touchstart", (e) => {
+    startX = e.touches[0].clientX;
+  });
+
+  lightbox.addEventListener("touchend", (e) => {
+    endX = e.changedTouches[0].clientX;
+    handleSwipe();
+  });
+
+  function handleSwipe() {
+    const diff = startX - endX;
+
+    if (Math.abs(diff) < 50) return; // ignore small swipes
+
+    if (diff > 0) {
+      showNext(); // swipe left
+    } else {
+      showPrev(); // swipe right
+    }
+  }
 </script>
 
 </body>

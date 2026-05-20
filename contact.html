@@ -246,6 +246,11 @@
       min-height: 100px;
     }
 
+    /* HIDE CONTACT FORM */
+    .contact-form {
+      display: none;
+    }
+
     .form-group select option {
       background: #1a1a1a;
       color: var(--white);
@@ -444,7 +449,7 @@
         <textarea id="inquiry" name="inquiry" placeholder="Tell me what's on your mind..." required></textarea>
       </div>
 
-      <button type="button" class="btn-submit" onclick="handleSubmit()">Submit</button>
+      <button type="submit" class="btn-submit">
       <div class="form-success" id="formSuccess">Thank you! I'll be in touch soon.</div>
     </div>
   </section>
